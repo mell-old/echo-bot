@@ -2,6 +2,9 @@ import telebot
 from telebot import types
 import urllib
 
+from telebot import apihelper
+apihelper.proxy = {'https': 'socks5://telegram.vpn.net:55555'}
+
 from keyboard import ADMIN_CALLBACK, TITLES
 from keyboard import get_base_reply_keyboard, get_inline_keyboard_challenge, get_inline_keyboard_info, get_inline_keyboard_admin
 from keyboard import BUTTON_INFO, BUTTON_CHALLENGE, CALLBACK_BUTTON_INFO, CALLBACK_BUTTON_VIDEO, CALLBACK_BUTTON_SEND, CALLBACK_BUTTON_ONE, CALLBACK_BUTTON_TWO
