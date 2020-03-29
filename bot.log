@@ -1,0 +1,152 @@
+INFO:db:Success get from db
+INFO:db:Success get from db
+INFO:db:Success get from db
+INFO:db:Success get from db
+INFO:bot:Open admin panel by: olehmell
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:\n[b\'{"ok":false,"error_code":404,"description":"Not Found"}\']',)
+Traceback (most recent call last):
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/util.py", line 60, in run
+    task(*args, **kwargs)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 277, in __retrieve_updates
+    logger.debug('Skipped {0} pending messages'.format(self.__skip_updates()))
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 261, in __skip_updates
+    updates = self.get_updates(offset=self.last_update_id, timeout=1)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 249, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 194, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 60, in _make_request
+    return _check_result(method_name, result)['result']
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 79, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:
+[b'{"ok":false,"error_code":404,"description":"Not Found"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:
+[b'{"ok":false,"error_code":404,"description":"Not Found"}']
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:\n[b\'{"ok":false,"error_code":404,"description":"Not Found"}\']',)
+Traceback (most recent call last):
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/util.py", line 60, in run
+    task(*args, **kwargs)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 277, in __retrieve_updates
+    logger.debug('Skipped {0} pending messages'.format(self.__skip_updates()))
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 261, in __skip_updates
+    updates = self.get_updates(offset=self.last_update_id, timeout=1)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 249, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 194, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 60, in _make_request
+    return _check_result(method_name, result)['result']
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 79, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:
+[b'{"ok":false,"error_code":404,"description":"Not Found"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:
+[b'{"ok":false,"error_code":404,"description":"Not Found"}']
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:\n[b\'{"ok":false,"error_code":404,"description":"Not Found"}\']',)
+Traceback (most recent call last):
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/util.py", line 60, in run
+    task(*args, **kwargs)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 277, in __retrieve_updates
+    logger.debug('Skipped {0} pending messages'.format(self.__skip_updates()))
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 261, in __skip_updates
+    updates = self.get_updates(offset=self.last_update_id, timeout=1)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 249, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 194, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 60, in _make_request
+    return _check_result(method_name, result)['result']
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 79, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:
+[b'{"ok":false,"error_code":404,"description":"Not Found"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:
+[b'{"ok":false,"error_code":404,"description":"Not Found"}']
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:\n[b\'{"ok":false,"error_code":404,"description":"Not Found"}\']',)
+Traceback (most recent call last):
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/util.py", line 60, in run
+    task(*args, **kwargs)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 277, in __retrieve_updates
+    logger.debug('Skipped {0} pending messages'.format(self.__skip_updates()))
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 261, in __skip_updates
+    updates = self.get_updates(offset=self.last_update_id, timeout=1)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 249, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 194, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 60, in _make_request
+    return _check_result(method_name, result)['result']
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 79, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:
+[b'{"ok":false,"error_code":404,"description":"Not Found"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:
+[b'{"ok":false,"error_code":404,"description":"Not Found"}']
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:\n[b\'{"ok":false,"error_code":404,"description":"Not Found"}\']',)
+Traceback (most recent call last):
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/util.py", line 60, in run
+    task(*args, **kwargs)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 277, in __retrieve_updates
+    logger.debug('Skipped {0} pending messages'.format(self.__skip_updates()))
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 261, in __skip_updates
+    updates = self.get_updates(offset=self.last_update_id, timeout=1)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 249, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 194, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 60, in _make_request
+    return _check_result(method_name, result)['result']
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 79, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:
+[b'{"ok":false,"error_code":404,"description":"Not Found"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:
+[b'{"ok":false,"error_code":404,"description":"Not Found"}']
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:\n[b\'{"ok":false,"error_code":404,"description":"Not Found"}\']',)
+Traceback (most recent call last):
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/util.py", line 60, in run
+    task(*args, **kwargs)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 277, in __retrieve_updates
+    logger.debug('Skipped {0} pending messages'.format(self.__skip_updates()))
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 261, in __skip_updates
+    updates = self.get_updates(offset=self.last_update_id, timeout=1)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 249, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 194, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 60, in _make_request
+    return _check_result(method_name, result)['result']
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 79, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:
+[b'{"ok":false,"error_code":404,"description":"Not Found"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:
+[b'{"ok":false,"error_code":404,"description":"Not Found"}']
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:\n[b\'{"ok":false,"error_code":404,"description":"Not Found"}\']',)
+Traceback (most recent call last):
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/util.py", line 60, in run
+    task(*args, **kwargs)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 277, in __retrieve_updates
+    logger.debug('Skipped {0} pending messages'.format(self.__skip_updates()))
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 261, in __skip_updates
+    updates = self.get_updates(offset=self.last_update_id, timeout=1)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 249, in get_updates
+    json_updates = apihelper.get_updates(self.token, offset, limit, timeout, allowed_updates)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 194, in get_updates
+    return _make_request(token, method_url, params=payload)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 60, in _make_request
+    return _check_result(method_name, result)['result']
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 79, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:
+[b'{"ok":false,"error_code":404,"description":"Not Found"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:
+[b'{"ok":false,"error_code":404,"description":"Not Found"}']
