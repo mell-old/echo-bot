@@ -1,9 +1,5 @@
 import telebot
 from telebot import types
-import urllib
-
-from telebot import apihelper
-apihelper.proxy = {'https': 'socks5://telegram.vpn.net:55555'}
 
 from keyboard import ADMIN_CALLBACK, TITLES
 from keyboard import get_base_reply_keyboard, get_inline_keyboard_challenge, get_inline_keyboard_info, get_inline_keyboard_admin
@@ -19,7 +15,7 @@ from logger import new_logger
 
 log = new_logger('bot')
 
-bot = telebot.TeleBot(content['token'], skip_pending=True)
+bot = telebot.TeleBot(content['token'])
 
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
@@ -132,4 +128,4 @@ def query_handler(call):
                 )
 
 if __name__ == '__main__':
-    bot.polling(none_stop=True, timeout=2)
+    bot.polling(none_stop=True)
