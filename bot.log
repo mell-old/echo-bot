@@ -150,3 +150,187 @@ telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. 
 
 ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 404 Not Found. Response body:
 [b'{"ok":false,"error_code":404,"description":"Not Found"}']
+DEBUG:bot:Add new callback: callback_button_one
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_two
+INFO:db:Success insert to db
+INFO:bot:Send video welcome
+DEBUG:bot:Add new callback: callback_button_one
+INFO:db:Success insert to db
+ERROR:TeleBot:ConnectionError occurred, args=(ProtocolError('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer')),)
+Traceback (most recent call last):
+  File "/home/alert/.local/lib/python3.6/site-packages/urllib3/connectionpool.py", line 672, in urlopen
+    chunked=chunked,
+  File "/home/alert/.local/lib/python3.6/site-packages/urllib3/connectionpool.py", line 421, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/alert/.local/lib/python3.6/site-packages/urllib3/connectionpool.py", line 416, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/lib/python3.6/http/client.py", line 1346, in getresponse
+    response.begin()
+  File "/usr/lib/python3.6/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.6/http/client.py", line 268, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/lib/python3.6/socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+  File "/usr/lib/python3.6/ssl.py", line 1012, in recv_into
+    return self.read(nbytes, buffer)
+  File "/usr/lib/python3.6/ssl.py", line 874, in read
+    return self._sslobj.read(len, buffer)
+  File "/usr/lib/python3.6/ssl.py", line 631, in read
+    v = self._sslobj.read(len, buffer)
+ConnectionResetError: [Errno 104] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alert/.local/lib/python3.6/site-packages/requests/adapters.py", line 449, in send
+    timeout=timeout
+  File "/home/alert/.local/lib/python3.6/site-packages/urllib3/connectionpool.py", line 720, in urlopen
+    method, url, error=e, _pool=self, _stacktrace=sys.exc_info()[2]
+  File "/home/alert/.local/lib/python3.6/site-packages/urllib3/util/retry.py", line 400, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/alert/.local/lib/python3.6/site-packages/urllib3/packages/six.py", line 734, in reraise
+    raise value.with_traceback(tb)
+  File "/home/alert/.local/lib/python3.6/site-packages/urllib3/connectionpool.py", line 672, in urlopen
+    chunked=chunked,
+  File "/home/alert/.local/lib/python3.6/site-packages/urllib3/connectionpool.py", line 421, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/home/alert/.local/lib/python3.6/site-packages/urllib3/connectionpool.py", line 416, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/lib/python3.6/http/client.py", line 1346, in getresponse
+    response.begin()
+  File "/usr/lib/python3.6/http/client.py", line 307, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.6/http/client.py", line 268, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/usr/lib/python3.6/socket.py", line 586, in readinto
+    return self._sock.recv_into(b)
+  File "/usr/lib/python3.6/ssl.py", line 1012, in recv_into
+    return self.read(nbytes, buffer)
+  File "/usr/lib/python3.6/ssl.py", line 874, in read
+    return self._sslobj.read(len, buffer)
+  File "/usr/lib/python3.6/ssl.py", line 631, in read
+    v = self._sslobj.read(len, buffer)
+urllib3.exceptions.ProtocolError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/util.py", line 60, in run
+    task(*args, **kwargs)
+  File "/home/alert/bots/redbull/main.py", line 119, in query_handler
+    reply_markup=get_inline_keyboard_challenge()
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 1048, in edit_message_text
+    disable_web_page_preview, reply_markup)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 661, in edit_message_text
+    return _make_request(token, method_url, params=payload, method='post')
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 58, in _make_request
+    timeout=(connect_timeout, read_timeout), proxies=proxy)
+  File "/home/alert/.local/lib/python3.6/site-packages/requests/sessions.py", line 530, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/alert/.local/lib/python3.6/site-packages/requests/sessions.py", line 643, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/alert/.local/lib/python3.6/site-packages/requests/adapters.py", line 498, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))
+
+DEBUG:bot:Add new callback: callback_button1_send
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button1_video
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button1_info
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button1_video
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button1_video
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button1_info
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button1_send
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button1_info
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button1_video
+INFO:db:Success insert to db
+INFO:bot:Send video welcome
+DEBUG:bot:Add new callback: callback_button1_info
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_security
+INFO:db:Success insert to db
+ERROR:TeleBot:TypeError occurred, args=("send_message() got an unexpected keyword argument 'message_id'",)
+Traceback (most recent call last):
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/util.py", line 60, in run
+    task(*args, **kwargs)
+  File "/home/alert/bots/redbull/main.py", line 144, in query_handler
+    reply_markup=get_inline_keyboard_regulations()
+TypeError: send_message() got an unexpected keyword argument 'message_id'
+
+DEBUG:bot:Add new callback: callback_button_security
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_build
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_build
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_teams
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button1_info
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_teams
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_build
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_security
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_back_info
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_back_info
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button1_info
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_security
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_build
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_teams
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_back_info
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button1_send
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_one
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button_two
+INFO:db:Success insert to db
+INFO:bot:Send video welcome
+INFO:bot:Open admin panel by: olehmell
+INFO:db:Success get from db
+INFO:db:Success get from db
+INFO:db:Success get from db
+INFO:db:Success get from db
+INFO:db:Success get from db
+ERROR:TeleBot:ApiException occurred, args=('A request to the Telegram API was unsuccessful. The server returned HTTP 400 Bad Request. Response body:\n[b\'{"ok":false,"error_code":400,"description":"Bad Request: can\\\'t parse entities: Can\\\'t find end of the entity starting at byte offset 127"}\']',)
+Traceback (most recent call last):
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/util.py", line 60, in run
+    task(*args, **kwargs)
+  File "/home/alert/bots/redbull/main.py", line 80, in query_handler
+    reply_markup=get_inline_keyboard_admin()
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/__init__.py", line 1048, in edit_message_text
+    disable_web_page_preview, reply_markup)
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 661, in edit_message_text
+    return _make_request(token, method_url, params=payload, method='post')
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 60, in _make_request
+    return _check_result(method_name, result)['result']
+  File "/home/alert/.local/lib/python3.6/site-packages/telebot/apihelper.py", line 79, in _check_result
+    raise ApiException(msg, method_name, result)
+telebot.apihelper.ApiException: A request to the Telegram API was unsuccessful. The server returned HTTP 400 Bad Request. Response body:
+[b'{"ok":false,"error_code":400,"description":"Bad Request: can\'t parse entities: Can\'t find end of the entity starting at byte offset 127"}']
+
+ERROR:TeleBot:A request to the Telegram API was unsuccessful. The server returned HTTP 400 Bad Request. Response body:
+[b'{"ok":false,"error_code":400,"description":"Bad Request: can\'t parse entities: Can\'t find end of the entity starting at byte offset 127"}']
+DEBUG:bot:Add new callback: callback_button1_info
+INFO:db:Success insert to db
+DEBUG:bot:Add new callback: callback_button1_info
+INFO:db:Success insert to db
