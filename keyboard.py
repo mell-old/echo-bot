@@ -16,6 +16,7 @@ def get_base_reply_keyboard():
 CALLBACK_BUTTON_INFO = 'callback_button1_info'
 CALLBACK_BUTTON_VIDEO = 'callback_button1_video'
 CALLBACK_BUTTON_SEND = 'callback_button1_send'
+CALLBACK_BUTTON_VIEWER = 'callback_button_viewer'
 
 # INLINE KEYBOARD FOR CHALLENGE
 
@@ -36,6 +37,7 @@ TITLES = {
     CALLBACK_BUTTON_INFO: 'Що таке RedBull Flugtag?',
     CALLBACK_BUTTON_VIDEO: 'Як це було в 2013?',
     CALLBACK_BUTTON_SEND: 'Хочу прийняти участь',
+    CALLBACK_BUTTON_VIEWER: 'Хочу бути глядачем!',
     CALLBACK_BUTTON_ONE: '1. #некласичнийкостюм',
     CALLBACK_BUTTON_TWO: '2. #самсобідавінчі',
     CALLBACK_BUTTON_SECURITY: '1. Безпека',
@@ -47,8 +49,9 @@ def get_inline_keyboard_info():
     markup = InlineKeyboardMarkup(row_width=1)
     info_btn = InlineKeyboardButton(TITLES[CALLBACK_BUTTON_INFO], callback_data=CALLBACK_BUTTON_INFO)
     video_btn = InlineKeyboardButton(TITLES[CALLBACK_BUTTON_VIDEO], callback_data=CALLBACK_BUTTON_VIDEO)
-    send_btn = InlineKeyboardButton(TITLES[CALLBACK_BUTTON_SEND], url='https://bit.ly/flugtagregistrations')#callback_data=CALLBACK_BUTTON_SEND)
-    markup.add(info_btn, video_btn, send_btn)
+    send_btn = InlineKeyboardButton(TITLES[CALLBACK_BUTTON_SEND], url='https://bit.ly/flugtagregistrations'), #callback_data=CALLBACK_BUTTON_SEND)
+    viewer_btn = InlineKeyboardButton(TITLES[CALLBACK_BUTTON_VIEWER], url='https://bit.ly/facebookFlugtag')
+    markup.add(info_btn, video_btn, send_btn, viewer_btn)
     return markup
 
 def get_inline_keyboard_challenge():
