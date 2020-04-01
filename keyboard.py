@@ -49,7 +49,7 @@ def get_inline_keyboard_info():
     markup = InlineKeyboardMarkup(row_width=1)
     info_btn = InlineKeyboardButton(TITLES[CALLBACK_BUTTON_INFO], callback_data=CALLBACK_BUTTON_INFO)
     video_btn = InlineKeyboardButton(TITLES[CALLBACK_BUTTON_VIDEO], callback_data=CALLBACK_BUTTON_VIDEO)
-    send_btn = InlineKeyboardButton(TITLES[CALLBACK_BUTTON_SEND], url='https://bit.ly/flugtagregistrations'), #callback_data=CALLBACK_BUTTON_SEND)
+    send_btn = InlineKeyboardButton(TITLES[CALLBACK_BUTTON_SEND], url='https://bit.ly/flugtagregistrations') #callback_data=CALLBACK_BUTTON_SEND)
     viewer_btn = InlineKeyboardButton(TITLES[CALLBACK_BUTTON_VIEWER], url='https://bit.ly/facebookFlugtag')
     markup.add(info_btn, video_btn, send_btn, viewer_btn)
     return markup

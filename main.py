@@ -72,7 +72,7 @@ def query_handler(call):
         users_text = ''.join('@{}\n'.format(str(x[0])) for x in users)
         text='Користувачі які написнули на кнопку "{0}":\n'.format(btn_name) + users_text + cout_text
         if text != current_text:
-            bot.edit_message_text(
+            bot.send_message(
                 chat_id=chat_id,
                 message_id=call.message.message_id,
                 parse_mode=ParseMode.MARKDOWN,
@@ -82,57 +82,45 @@ def query_handler(call):
     else:
         log.debug('Add new callback: {0}'.format(callback))
         add_callback(call.from_user.username, callback)
-
+        def send_message(current_text, text, keyboard):
+            bot.edit_message_text(
+                chat_id=chat_id,
+                message_id=call.message.message_id,
+                parse_mode=ParseMode.MARKDOWN,
+                text=current_text
+            )
+            bot.send_message(
+                chat_id=chat_id,
+                parse_mode=ParseMode.MARKDOWN,
+                text=text,
+                reply_markup=keyboard()
+            )
         if callback == CALLBACK_BUTTON_INFO:
             text=content['info']['info']
             if text != current_text:
-                bot.edit_message_text(
-                    chat_id=chat_id,
-                    message_id=call.message.message_id,
-                    parse_mode=ParseMode.MARKDOWN,
-                    text=text,
-                    reply_markup=get_inline_keyboard_regulations()
-                )
+                send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_regulations)
         if callback == CALLBACK_BUTTON_VIDEO:
             text=content['info']['video']
             if text != current_text:
-                bot.edit_message_text(
-                    chat_id=chat_id,
-                    message_id=call.message.message_id,
-                    parse_mode=ParseMode.MARKDOWN,
-                    text=text,
-                    reply_markup=get_inline_keyboard_info()
-                )
-        if callback == CALLBACK_BUTTON_SEND:
-            text=content['info']['registration']
-            if text != current_text:
-                bot.edit_message_text(
-                    chat_id=chat_id,
-                    message_id=call.message.message_id,
-                    parse_mode=ParseMode.MARKDOWN,
-                    text=text,
-                    reply_markup=get_inline_keyboard_info()
-                )
+                send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_regulations)
+        # if callback == CALLBACK_BUTTON_SEND:
+        #     text=content['info']['registration']
+        #     if text != current_text:
+        #         bot.edit_message_text(
+        #             chat_id=chat_id,
+        #             message_id=call.message.message_id,
+        #             parse_mode=ParseMode.MARKDOWN,
+        #             text=text,
+        #             reply_markup=get_inline_keyboard_info()
+        #         )
         if callback == CALLBACK_BUTTON_ONE:
             text=content['info']['challenge_one']
             if text != current_text:
-                bot.edit_message_text(
-                    chat_id=chat_id,
-                    message_id=call.message.message_id,
-                    parse_mode=ParseMode.MARKDOWN,
-                    text=text,
-                    reply_markup=get_inline_keyboard_challenge()
-                )
+                send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_challenge)
         if callback == CALLBACK_BUTTON_TWO:
             text=content['info']['challenge_two']
             if text != current_text:
-                bot.edit_message_text(
-                    chat_id=chat_id,
-                    message_id=call.message.message_id,
-                    parse_mode=ParseMode.MARKDOWN,
-                    text=text,
-                    reply_markup=get_inline_keyboard_challenge()
-                )
+                send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_challenge)
         if callback == CALLBACK_BUTTON_SECURITY:
             text=content['regulations']['security']
             if text != current_text:
@@ -164,7 +152,7 @@ def query_handler(call):
             text = content['msg']['challenge'],
             if text != current_text:
                 text = content['msg']['fgt']
-                bot.send_message(chat_id, text, reply_markup=get_inline_keyboard_info())
+                send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_info)
 
 if __name__ == '__main__':
     bot.polling(none_stop=True)
