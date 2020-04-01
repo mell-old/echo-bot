@@ -2,19 +2,23 @@ import telebot
 from telebot import types
 import urllib
 
-from keyboard import ADMIN_CALLBACK, TITLES
-from keyboard import get_base_reply_keyboard, get_inline_keyboard_challenge, get_inline_keyboard_info, get_inline_keyboard_admin, get_inline_keyboard_regulations
-from keyboard import BUTTON_INFO, BUTTON_CHALLENGE, CALLBACK_BUTTON_INFO, CALLBACK_BUTTON_VIDEO, CALLBACK_BUTTON_SEND, CALLBACK_BUTTON_ONE, CALLBACK_BUTTON_TWO, CALLBACK_BUTTON_SECURITY, CALLBACK_BUTTON_BACK_INFO, CALLBACK_BUTTON_BUILD, CALLBACK_BUTTON_TEAMS
-from db import add_callback, get_users_by_callback
+from keyboard import ADMIN_CALLBACK, TITLES, TEST_BUTTONS
+from keyboard import get_base_reply_keyboard, get_inline_keyboard_challenge, get_inline_keyboard_info, get_inline_keyboard_admin, get_inline_keyboard_regulations, get_inline_keyboard_test
+from keyboard import BUTTON_INFO, BUTTON_CHALLENGE, CALLBACK_BUTTON_INFO, CALLBACK_BUTTON_VIDEO, CALLBACK_BUTTON_SEND, CALLBACK_BUTTON_ONE, CALLBACK_BUTTON_TWO, CALLBACK_BUTTON_SECURITY, CALLBACK_BUTTON_BACK_INFO, CALLBACK_BUTTON_BUILD, CALLBACK_BUTTON_TEAMS, CALLBACK_BUTTON_TEST
+from db import add_callback, get_users_by_callback, init_db, get_count_by_user, add_user_to_test, update_count_by_user
 
-from content import content
+from json_content import content
+from json_content import test
 
 import datetime
 from telegram.parsemode import ParseMode
 
 from logger import new_logger
 
+
 log = new_logger('bot')
+
+init_db()
 
 bot = telebot.TeleBot(content['token'])
 
@@ -56,7 +60,7 @@ def send_anytext(message):
         text = content['msg']['challenge'],
         bot.send_message(chat_id, text, parse_mode=ParseMode.MARKDOWN, reply_markup=get_inline_keyboard_challenge())
     else:
-        bot.send_message(chat_id, text='Немає відповіді на ваш текст, використовуй клавіатуру, щоб швидко знайти потрібну інформацію', reply_markup=get_base_reply_keyboard())
+        bot.send_message(chat_id, text='Немає відповіді на ваш текст, використовуй кнопки, щоб швидко знайти потрібну інформацію', reply_markup=get_base_reply_keyboard())
 
 @bot.callback_query_handler(func=lambda call: True)
 def query_handler(call):
@@ -64,45 +68,65 @@ def query_handler(call):
     now = datetime.datetime.now()
     chat_id = call.message.chat.id
     current_text = call.message.text
+    def send_message(current_text, text, keyboard):
+        bot.edit_message_text(
+            chat_id=chat_id,
+            message_id=call.message.message_id,
+            parse_mode=ParseMode.MARKDOWN,
+            text=current_text
+        )
+        bot.send_message(
+            chat_id=chat_id,
+            parse_mode=ParseMode.MARKDOWN,
+            text=text,
+            reply_markup=keyboard
+        )
     if callback in ADMIN_CALLBACK:
         new_callback = str(callback).split('_res')[0]
         (count, users) = get_users_by_callback(new_callback)
         btn_name = TITLES[new_callback]
         cout_text = ('Усього натисків на кнопку: {0}').format(count)
         users_text = ''.join('@{}\n'.format(str(x[0])) for x in users)
-        text='Користувачі які написнули на кнопку "{0}":\n'.format(btn_name) + users_text + cout_text
+        text='Користувачі які написнули на кнопку "{0}":\n{1}{2}'.format(btn_name, users_text, cout_text)
+        print(text)
         if text != current_text:
-            bot.send_message(
-                chat_id=chat_id,
-                message_id=call.message.message_id,
-                parse_mode=ParseMode.MARKDOWN,
-                text=text,
-                reply_markup=get_inline_keyboard_admin()
-            )
+            send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_admin())
     else:
         log.debug('Add new callback: {0}'.format(callback))
-        add_callback(call.from_user.username, callback)
-        def send_message(current_text, text, keyboard):
-            bot.edit_message_text(
-                chat_id=chat_id,
-                message_id=call.message.message_id,
-                parse_mode=ParseMode.MARKDOWN,
-                text=current_text
-            )
-            bot.send_message(
-                chat_id=chat_id,
-                parse_mode=ParseMode.MARKDOWN,
-                text=text,
-                reply_markup=keyboard()
-            )
+        username = call.from_user.username
+        add_callback(username, callback)
         if callback == CALLBACK_BUTTON_INFO:
             text=content['info']['info']
             if text != current_text:
-                send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_regulations)
+                send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_regulations())
         if callback == CALLBACK_BUTTON_VIDEO:
-            text=content['info']['video']
-            if text != current_text:
-                send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_regulations)
+            text='Відео не вдалось завантажити, ти можеш глянути його за посиланням:\n' + content['info']['video']
+            if text != current_text and current_text != '':
+                bot.edit_message_text(
+                    chat_id=chat_id,
+                    message_id=call.message.message_id,
+                    parse_mode=ParseMode.MARKDOWN,
+                    text=current_text
+                )
+                try:  
+                    video = open('what_flugtag.mp4', 'rb')
+                    log.info('Send video welcome')
+                    bot.send_video(
+                        call.message.chat.id,
+                        video
+                    )
+                    bot.send_message(
+                        call.message.chat.id,
+                        '☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️\nТримай підбірку драйвого контенту',
+                        reply_markup=get_inline_keyboard_info()
+                    )
+                except IOError: 
+                    log.info('Send message welcome')
+                    bot.send_message(
+                        call.message.chat.id,
+                        text,
+                        reply_markup=get_inline_keyboard_info()
+                    )
         # if callback == CALLBACK_BUTTON_SEND:
         #     text=content['info']['registration']
         #     if text != current_text:
@@ -116,11 +140,11 @@ def query_handler(call):
         if callback == CALLBACK_BUTTON_ONE:
             text=content['info']['challenge_one']
             if text != current_text:
-                send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_challenge)
+                send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_challenge())
         if callback == CALLBACK_BUTTON_TWO:
             text=content['info']['challenge_two']
             if text != current_text:
-                send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_challenge)
+                send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_challenge())
         if callback == CALLBACK_BUTTON_SECURITY:
             text=content['regulations']['security']
             if text != current_text:
@@ -139,6 +163,11 @@ def query_handler(call):
                     text=text,
                     reply_markup=get_inline_keyboard_regulations()
                 )
+        if callback == CALLBACK_BUTTON_TEST:
+            text = test[0]['quesion']
+            add_user_to_test(username)
+            send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_test(0))
+
         if callback == CALLBACK_BUTTON_TEAMS:
             text=content['regulations']['teams']
             if text != current_text:
@@ -152,7 +181,29 @@ def query_handler(call):
             text = content['msg']['challenge'],
             if text != current_text:
                 text = content['msg']['fgt']
-                send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_info)
+                send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_info())
+        if callback in TEST_BUTTONS:
+            number, win, lose = get_count_by_user(username=username)
+            next_quesion_number = number + 1
+            print(number, win, lose, callback)
+            current_content_test = test[number]
+            answer = current_content_test['answer']
+            text_answer = 'відповідь "{0}" правильна'.format(current_content_test['buttons'][answer])
+            current_msg = ''
+            if callback == answer:
+                current_msg = '*Молодець!* Так тримати твоя ' + text_answer 
+                update_count_by_user(username, 'true')
+            else:
+                current_msg = 'Нажаль ти помилився. Правильна ' + text_answer
+                update_count_by_user(username, 'false')
+            if next_quesion_number >= 5:
+                number, win, lose = get_count_by_user(username=username)
+                finish_msg = 'Вітаю, ти закінчив випробування.\nОсь твої результати:\nПравильних відповідей: *{0}*\nНеправильних відповідей: *{1}*'.format(win, lose)
+                send_message(current_text=current_msg, text=finish_msg, keyboard=get_inline_keyboard_regulations())
+            else:
+                next_content_test = test[next_quesion_number]
+                quesion = next_content_test['quesion']
+                send_message(current_text=current_msg, text=quesion, keyboard=get_inline_keyboard_test(next_quesion_number))
 
 if __name__ == '__main__':
     bot.polling(none_stop=True)

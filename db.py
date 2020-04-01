@@ -22,12 +22,23 @@ def init_db(force: bool = False):
 
     if force:
         c.execute('DROP TABLE IF EXISTS users')
+        c.execute('DROP TABLE IF EXISTS test')
     
     c.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id          INTEGER PRIMARY KEY,
             username    TEXT NOT NULL,
             callback    TEXT NOT NULL
+        )
+    ''')
+
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS test (
+            id          INTEGER PRIMARY KEY,
+            username    TEXT NOT NULL,
+            count       integer DEFAULT 0,
+            true        integer DEFAULT 0,
+            false       integer DEFAULT 0
         )
     ''')
 
@@ -41,7 +52,7 @@ def add_callback(username: str, callback: str):
     c.execute('SELECT * FROM users')
 
     res = c.fetchall()
-    log.info('Success insert to db')
+    log.info('Success insert to callback table')
     conn.commit()
 
 def get_users_by_callback(callback: str):
@@ -68,8 +79,52 @@ def get_users_by_callback(callback: str):
     log.info('Success get from db')
     return (count, users)
 
+def get_count_by_user(username: str):
+    conn = get_connection()
+    c = conn.cursor()
 
+    c.execute('''
+        SELECT count, true, false FROM test
+        WHERE username = ?
+        LIMIT 1
+    ''', (username, ))
+
+    res = c.fetchall()
+    conn.commit()
+    
+    if res:
+        print(res[0])
+        return res[0]
+    else:
+        print(0)
+        return (0,0,0)
+
+def update_count_by_user(username:str, answer: str):
+    conn = get_connection()
+    c = conn.cursor()
+
+    c.execute('''
+        UPDATE test
+        SET count = count + 1, {0} = {0} + 1
+        WHERE username = ?
+        LIMIT 1
+    '''.format(answer), (username, ))
+
+    log.info('Success update to test table')
+    conn.commit()
+
+def add_user_to_test(username: str):
+    conn = get_connection()
+    c = conn.cursor()
+    c.execute('INSERT INTO test (username) VALUES (?)', (username,))
+
+    res = c.fetchall()
+    log.info('Success insert to test table')
+    conn.commit()
+ 
 if __name__ == '__main__':
     init_db()
-    add_callback('tetsnet', 'callback_button_two')
-    get_users_by_callback('callback_button_two')
+    username = 'testuser'
+    update_count_by_user(username, 'true')
+    update_count_by_user(username, 'false')
+    get_count_by_user(username)
