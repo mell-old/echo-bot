@@ -187,10 +187,10 @@ def query_handler(call):
             print(number, win, lose, callback)
             current_content_test = test[number]
             answer = current_content_test['answer']
-            text_answer = 'відповідь "{0}" правильна'.format(current_content_test['buttons'][answer])
+            text_answer = 'відповідь "{0}"'.format(current_content_test['buttons'][answer])
             current_msg = ''
             if callback == answer:
-                current_msg = '*Молодець!* Так тримати твоя ' + text_answer 
+                current_msg = '*Молодець!* Так тримати твоя {0} правильна'.format(text_answer) 
                 update_count_by_user(username, 'true')
             else:
                 current_msg = 'Нажаль ти помилився. Правильна ' + text_answer
