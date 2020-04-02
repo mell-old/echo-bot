@@ -86,6 +86,7 @@ def get_count_by_user(username: str):
     c.execute('''
         SELECT count, true, false FROM test
         WHERE username = ?
+        ORDER BY id DESC
         LIMIT 1
     ''', (username, ))
 
@@ -107,6 +108,7 @@ def update_count_by_user(username:str, answer: str):
         UPDATE test
         SET count = count + 1, {0} = {0} + 1
         WHERE username = ?
+        ORDER BY id DESC
         LIMIT 1
     '''.format(answer), (username, ))
 

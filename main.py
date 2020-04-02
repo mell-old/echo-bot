@@ -15,7 +15,6 @@ from telegram.parsemode import ParseMode
 
 from logger import new_logger
 
-
 log = new_logger('bot')
 
 init_db()
