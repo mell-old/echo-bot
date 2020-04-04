@@ -216,12 +216,12 @@ def query_handler(call):
             current_content_test = test[number]
             answer = current_content_test['answer']
             current_msg = ''
-            text_answer = current_content_test['buttons'][answer]
+            text_answer = '"{0}"'.format(current_content_test['buttons'][answer])
             if callback == answer:
-                current_msg = '*Молодець!* Так тримати твоя відповідь: {0} правильна'.format(text_answer) 
+                current_msg = '*Молодець!* Так тримати, твоя відповідь {0} правильна'.format(text_answer) 
                 update_count_by_user(username, 'true')
             else:
-                current_msg = 'Нажаль ти помилився. Правильна відповідь' + text_answer
+                current_msg = 'Нажаль ти помилився. Правильна відповідь: {0}'.format(text_answer)
                 update_count_by_user(username, 'false')
             if next_quesion_number >= 5:
                 number, win, lose = get_count_by_user(username=username)
