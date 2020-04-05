@@ -51,7 +51,6 @@ def add_callback(username: str, callback: str):
     
     c.execute('SELECT * FROM users')
 
-    res = c.fetchall()
     log.info('Success insert to callback table')
     conn.commit()
 
@@ -74,8 +73,6 @@ def get_users_by_callback(callback: str):
     count = c.fetchall()[0][0]
 
     conn.commit()
-    cout_text = ('Усього {0} раз натиснули на кнопку').format(count)
-    users_text = ''.join('@{}\n'.format(str(x[0])) for x in users)
     log.info('Success get from db')
     return (count, users)
 
@@ -96,9 +93,9 @@ def get_count_by_user(username: str):
     if res:
         print(res[0])
         return res[0]
-    else:
-        print(0)
-        return (0,0,0)
+
+    print(0)
+    return (0,0,0)
 
 def update_count_by_user(username:str, answer: str):
     conn = get_connection()
@@ -120,7 +117,6 @@ def add_user_to_test(username: str):
     c = conn.cursor()
     c.execute('INSERT INTO test (username) VALUES (?)', (username,))
 
-    res = c.fetchall()
     log.info('Success insert to test table')
     conn.commit()
  

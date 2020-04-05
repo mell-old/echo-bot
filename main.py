@@ -1,6 +1,4 @@
 import telebot
-from telebot import types
-import urllib
 
 from keyboard import ADMIN_CALLBACK, TITLES, TEST_BUTTONS
 from keyboard import get_inline_keyboard_test_finish, get_inline_keyboard_test_start, get_base_reply_keyboard, get_inline_keyboard_challenge, get_inline_keyboard_info, get_inline_keyboard_admin, get_inline_keyboard_regulations, get_inline_keyboard_test
@@ -58,7 +56,7 @@ def send_anytext(message):
         add_callback(username, 'callback_info')
         bot.send_message(chat_id, text, reply_markup=get_inline_keyboard_info())
     elif message.text == BUTTON_CHALLENGE:
-        text = content['msg']['challenge'],
+        text = content['msg']['challenge']
         add_callback(username, 'callback_challenge')
         bot.send_message(chat_id, text, parse_mode=ParseMode.MARKDOWN, reply_markup=get_inline_keyboard_challenge())
     elif message.text == 'Перевір себе':
@@ -71,7 +69,6 @@ def send_anytext(message):
 @bot.callback_query_handler(func=lambda call: True)
 def query_handler(call):
     callback = call.data
-    now = datetime.datetime.now()
     chat_id = call.message.chat.id
     current_text = call.message.text
     def send_message(current_text, text, keyboard):
@@ -121,7 +118,7 @@ def query_handler(call):
         
         if callback == CALLBACK_BUTTON_VIDEO:
             text='Відео не вдалось завантажити, ти можеш глянути його за посиланням:\n' + content['info']['video']
-            if text != current_text and current_text != '':
+            if text not in current_text:
                 bot.edit_message_text(
                     chat_id=chat_id,
                     message_id=call.message.message_id,
@@ -204,7 +201,7 @@ def query_handler(call):
             send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_test(0))
         
         if callback == CALLBACK_BUTTON_BACK_INFO:
-            text = content['msg']['challenge'],
+            text = content['msg']['challenge']
             if text != current_text:
                 text = content['msg']['fgt']
                 send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_info())
