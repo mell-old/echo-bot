@@ -2,13 +2,11 @@ import telebot
 
 from keyboard import ADMIN_CALLBACK, TITLES, TEST_BUTTONS
 from keyboard import get_inline_keyboard_test_finish, get_inline_keyboard_test_start, get_base_reply_keyboard, get_inline_keyboard_challenge, get_inline_keyboard_info, get_inline_keyboard_admin, get_inline_keyboard_regulations, get_inline_keyboard_test
-from keyboard import CALLBACK_BUTTON_BACK_TEST, CALLBACK_BUTTON_REGULATIONS, BUTTON_INFO, BUTTON_CHALLENGE, CALLBACK_BUTTON_INFO, CALLBACK_BUTTON_VIDEO, CALLBACK_BUTTON_SEND, CALLBACK_BUTTON_ONE, CALLBACK_BUTTON_TWO, CALLBACK_BUTTON_SECURITY, CALLBACK_BUTTON_BACK_INFO, CALLBACK_BUTTON_BUILD, CALLBACK_BUTTON_TEAMS, CALLBACK_BUTTON_TEST
+from keyboard import CALLBACK_BUTTON_BACK_TEST, CALLBACK_BUTTON_REGULATIONS, BUTTON_INFO, BUTTON_CHALLENGE, CALLBACK_BUTTON_INFO, CALLBACK_BUTTON_VIDEO, CALLBACK_BUTTON_ONE, CALLBACK_BUTTON_TWO, CALLBACK_BUTTON_SECURITY, CALLBACK_BUTTON_BACK_INFO, CALLBACK_BUTTON_BUILD, CALLBACK_BUTTON_TEAMS, CALLBACK_BUTTON_TEST
 from db import add_callback, get_users_by_callback, init_db, get_count_by_user, add_user_to_test, update_count_by_user
 
 from json_content import content
 from json_content import test
-
-import datetime
 from telegram.parsemode import ParseMode
 
 from logger import new_logger
