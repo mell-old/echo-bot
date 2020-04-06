@@ -84,6 +84,20 @@ def query_handler(call):
             text=text,
             reply_markup=keyboard
         )
+    def send_photo(current_caption, photo, caption, keyboard):
+        bot.edit_message_caption(
+            chat_id=chat_id,
+            message_id=call.message.message_id,
+            parse_mode=ParseMode.MARKDOWN,
+            caption=current_caption
+        )
+        bot.send_photo(
+            chat_id=chat_id,
+            photo=photo,
+            parse_mode=ParseMode.MARKDOWN,
+            caption=caption,
+            reply_markup=keyboard
+        )
     if callback in ADMIN_CALLBACK:
         new_callback = str(callback).split('_res')[0]
         (count, users) = get_users_by_callback(new_callback)
@@ -123,14 +137,19 @@ def query_handler(call):
                     chat_id=chat_id,
                     message_id=call.message.message_id,
                     parse_mode=ParseMode.MARKDOWN,
-                    text=current_text
+                    text='Завантаження...'
                 )
                 try:  
-                    video = open('what_flugtag.mp4', 'rb')
+                    video1 = open('what_flugtag1.mp4', 'rb')
+                    video2 = open('what_flugtag2.mp4', 'rb')
                     log.info('Send video welcome')
                     bot.send_video(
                         call.message.chat.id,
-                        video
+                        video1
+                    )
+                    bot.send_video(
+                        call.message.chat.id,
+                        video2
                     )
                     bot.send_message(
                         call.message.chat.id,
@@ -198,7 +217,20 @@ def query_handler(call):
         if callback == CALLBACK_BUTTON_TEST:
             text = test[0]['quesion']
             add_user_to_test(username)
-            send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_test(0))
+            photo = open('vic0.jpg', 'rb')
+            bot.edit_message_text(
+                chat_id=chat_id,
+                message_id=call.message.message_id,
+                parse_mode=ParseMode.MARKDOWN,
+                text=current_text
+            )
+            bot.send_photo(
+                chat_id=chat_id,
+                photo=photo,
+                parse_mode=ParseMode.MARKDOWN,
+                caption=text,
+                reply_markup=get_inline_keyboard_test(0)
+            )
         
         if callback == CALLBACK_BUTTON_BACK_INFO:
             text = content['msg']['challenge']
@@ -222,12 +254,14 @@ def query_handler(call):
                 update_count_by_user(username, 'false')
             if next_quesion_number >= 5:
                 number, win, lose = get_count_by_user(username=username)
+                photo = open('finish.jpg'.format(str(next_quesion_number)), 'rb')
                 finish_msg = 'Вітаю, ти закінчив випробування.\nОсь твої результати:\nПравильних відповідей: *{0}*\nНеправильних відповідей: *{1}*'.format(win, lose)
-                send_message(current_text=current_msg, text=finish_msg, keyboard=get_inline_keyboard_test_finish())
+                send_photo(current_caption=current_msg, caption=finish_msg, photo=photo, keyboard=get_inline_keyboard_test_finish())
             else:
                 next_content_test = test[next_quesion_number]
                 quesion = next_content_test['quesion']
-                send_message(current_text=current_msg, text=quesion, keyboard=get_inline_keyboard_test(next_quesion_number))
+                photo = open('vic{0}.jpg'.format(str(next_quesion_number)), 'rb')
+                send_photo(current_caption=current_msg, caption=quesion, photo=photo, keyboard=get_inline_keyboard_test(next_quesion_number))
 
 if __name__ == '__main__':
     bot.polling(none_stop=True)
