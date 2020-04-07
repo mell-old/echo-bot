@@ -138,8 +138,8 @@ def query_handler(call):
                     text='Завантаження...'
                 )
                 try:  
-                    video1 = open('what_flugtag1.mp4', 'rb')
-                    video2 = open('what_flugtag2.mp4', 'rb')
+                    video1 = open('what_flugtag_1.mp4', 'rb')
+                    video2 = open('what_flugtag_2.mp4', 'rb')
                     log.info('Send video welcome')
                     bot.send_video(
                         call.message.chat.id,
