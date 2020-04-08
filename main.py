@@ -3,7 +3,7 @@ import telebot
 from keyboard import ADMIN_CALLBACK, TITLES, TEST_BUTTONS
 from keyboard import get_inline_keyboard_test_finish, get_inline_keyboard_test_start, get_base_reply_keyboard, get_inline_keyboard_challenge, get_inline_keyboard_info, get_inline_keyboard_admin, get_inline_keyboard_regulations, get_inline_keyboard_test
 from keyboard import CALLBACK_BUTTON_BACK_TEST, CALLBACK_BUTTON_REGULATIONS, BUTTON_INFO, BUTTON_CHALLENGE, CALLBACK_BUTTON_INFO, CALLBACK_BUTTON_VIDEO, CALLBACK_BUTTON_ONE, CALLBACK_BUTTON_TWO, CALLBACK_BUTTON_SECURITY, CALLBACK_BUTTON_BACK_INFO, CALLBACK_BUTTON_BUILD, CALLBACK_BUTTON_TEAMS, CALLBACK_BUTTON_TEST
-from db import add_callback, get_users_by_callback, init_db, get_count_by_user, add_user_to_test, update_count_by_user
+from db import add_callback, add_user_to_test, get_count_by_user_id, get_users_by_callback, init_db, update_count_by_user_id
 
 from json_content import content
 from json_content import test
@@ -49,17 +49,18 @@ def send_admin(message):
 def send_anytext(message):
     chat_id = message.chat.id
     username = message.from_user.username
+    user_id = message.from_user.id
     if message.text == BUTTON_INFO:
         text = content['msg']['fgt']
-        add_callback(username, 'callback_info')
+        add_callback(user_id, username, 'callback_info')
         bot.send_message(chat_id, text, reply_markup=get_inline_keyboard_info())
     elif message.text == BUTTON_CHALLENGE:
         text = content['msg']['challenge']
-        add_callback(username, 'callback_challenge')
+        add_callback(user_id, username, 'callback_challenge')
         bot.send_message(chat_id, text, parse_mode=ParseMode.MARKDOWN, reply_markup=get_inline_keyboard_challenge())
     elif message.text == 'Перевір себе':
         text = content['test']
-        add_callback(username, 'callback_test')
+        add_callback(user_id, username, 'callback_test')
         bot.send_message(chat_id, text, parse_mode=ParseMode.MARKDOWN, reply_markup=get_inline_keyboard_test_start())
     else:
         bot.send_message(chat_id, text='Немає відповіді на ваш текст, використовуй кнопки, щоб швидко знайти потрібну інформацію', reply_markup=get_base_reply_keyboard())
@@ -109,7 +110,8 @@ def query_handler(call):
     else:
         log.debug('Add new callback: {0}'.format(callback))
         username = call.from_user.username
-        add_callback(username, callback)
+        user_id = call.from_user.id
+        add_callback(user_id, username, callback)
         print(callback)    
         if callback == CALLBACK_BUTTON_REGULATIONS:
                 bot.edit_message_text(
@@ -214,7 +216,7 @@ def query_handler(call):
 
         if callback == CALLBACK_BUTTON_TEST:
             text = test[0]['quesion']
-            add_user_to_test(username)
+            add_user_to_test(user_id, username)
             photo = open('vic0.jpg', 'rb')
             bot.edit_message_text(
                 chat_id=chat_id,
@@ -237,7 +239,7 @@ def query_handler(call):
                 send_message(current_text=current_text, text=text, keyboard=get_inline_keyboard_info())
         
         if callback in TEST_BUTTONS:
-            number, win, lose = get_count_by_user(username=username)
+            number, win, lose = get_count_by_user_id(user_id)
             next_quesion_number = number + 1
             print(number, win, lose, callback)
             current_content_test = test[number]
@@ -246,12 +248,12 @@ def query_handler(call):
             text_answer = '"{0}"'.format(current_content_test['buttons'][answer])
             if callback == answer:
                 current_msg = '*Молодець!* Так тримати, твоя відповідь {0} правильна'.format(text_answer) 
-                update_count_by_user(username, 'true')
+                update_count_by_user_id(user_id, 'true')
             else:
                 current_msg = 'Нажаль ти помилився. Правильна відповідь: {0}'.format(text_answer)
-                update_count_by_user(username, 'false')
+                update_count_by_user_id(user_id, 'false')
             if next_quesion_number >= 5:
-                number, win, lose = get_count_by_user(username=username)
+                number, win, lose = get_count_by_user_id(user_id)
                 photo = open('finish.jpg'.format(str(next_quesion_number)), 'rb')
                 finish_msg = 'Вітаю, ти закінчив випробування.\nОсь твої результати:\nПравильних відповідей: *{0}*\nНеправильних відповідей: *{1}*'.format(win, lose)
                 send_photo(current_caption=current_msg, caption=finish_msg, photo=photo, keyboard=get_inline_keyboard_test_finish())

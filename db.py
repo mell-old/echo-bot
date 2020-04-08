@@ -27,7 +27,8 @@ def init_db(force: bool = False):
     c.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id          INTEGER PRIMARY KEY,
-            username    TEXT NOT NULL,
+            user_id     TEXT NOT NULL,
+            username    TEXT,
             callback    TEXT NOT NULL
         )
     ''')
@@ -35,7 +36,8 @@ def init_db(force: bool = False):
     c.execute('''
         CREATE TABLE IF NOT EXISTS test (
             id          INTEGER PRIMARY KEY,
-            username    TEXT NOT NULL,
+            user_id     TEXT NOT NULL,
+            username    TEXT,
             count       integer DEFAULT 0,
             true        integer DEFAULT 0,
             false       integer DEFAULT 0
@@ -44,10 +46,13 @@ def init_db(force: bool = False):
 
     conn.commit()
 
-def add_callback(username: str, callback: str):
+def add_callback(user_id: str, username: str, callback: str):
     conn = get_connection()
     c = conn.cursor()
-    c.execute('INSERT INTO users (username, callback) VALUES (?,?)', (username, callback))
+    user = username
+    if user == None:
+        user = 'anonymous'
+    c.execute('INSERT INTO users (user_id, username, callback) VALUES (?,?,?)', (user_id, user, callback))
     
     c.execute('SELECT * FROM users')
 
@@ -76,16 +81,16 @@ def get_users_by_callback(callback: str):
     log.info('Success get from db')
     return (count, users)
 
-def get_count_by_user(username: str):
+def get_count_by_user_id(user_id: str):
     conn = get_connection()
     c = conn.cursor()
 
     c.execute('''
         SELECT count, true, false FROM test
-        WHERE username = ?
+        WHERE user_id = ?
         ORDER BY id DESC
         LIMIT 1
-    ''', (username, ))
+    ''', (user_id, ))
 
     res = c.fetchall()
     conn.commit()
@@ -97,32 +102,33 @@ def get_count_by_user(username: str):
     print(0)
     return (0,0,0)
 
-def update_count_by_user(username:str, answer: str):
+def update_count_by_user_id(user_id:str, answer: str):
     conn = get_connection()
     c = conn.cursor()
 
     c.execute('''
         UPDATE test
         SET count = count + 1, {0} = {0} + 1
-        WHERE username = ?
+        WHERE user_id = ?
         ORDER BY id DESC
         LIMIT 1
-    '''.format(answer), (username, ))
+    '''.format(answer), (user_id, ))
 
     log.info('Success update to test table')
     conn.commit()
 
-def add_user_to_test(username: str):
+def add_user_to_test(user_id: str, username: str):
     conn = get_connection()
     c = conn.cursor()
-    c.execute('INSERT INTO test (username) VALUES (?)', (username,))
+    c.execute('INSERT INTO test (user_id, username) VALUES (?,?)', (user_id, username))
 
     log.info('Success insert to test table')
     conn.commit()
  
 if __name__ == '__main__':
-    init_db()
+    init_db(True)
     username = 'testuser'
-    update_count_by_user(username, 'true')
-    update_count_by_user(username, 'false')
-    get_count_by_user(username)
+    add_user_to_test('123124324', username)
+    update_count_by_user_id('123124324', 'true')
+    update_count_by_user_id('123124324', 'false')
+    get_count_by_user_id('123124324')
