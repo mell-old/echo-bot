@@ -57,11 +57,11 @@ def send_anytext(message):
     elif message.text == BUTTON_CHALLENGE:
         text = content['msg']['challenge']
         add_callback(user_id, username, 'callback_challenge')
-        bot.send_message(chat_id, text, parse_mode=ParseMode.MARKDOWN, reply_markup=get_inline_keyboard_challenge())
+        bot.send_message(chat_id, text, parse_mode=ParseMode.HTML, reply_markup=get_inline_keyboard_challenge())
     elif message.text == 'Перевір себе':
         text = content['test']
         add_callback(user_id, username, 'callback_test')
-        bot.send_message(chat_id, text, parse_mode=ParseMode.MARKDOWN, reply_markup=get_inline_keyboard_test_start())
+        bot.send_message(chat_id, text, parse_mode=ParseMode.HTML, reply_markup=get_inline_keyboard_test_start())
     else:
         bot.send_message(chat_id, text='Немає відповіді на ваш текст, використовуй кнопки, щоб швидко знайти потрібну інформацію', reply_markup=get_base_reply_keyboard())
 
@@ -74,12 +74,12 @@ def query_handler(call):
         bot.edit_message_text(
             chat_id=chat_id,
             message_id=call.message.message_id,
-            parse_mode=ParseMode.MARKDOWN,
+            parse_mode=ParseMode.HTML,
             text=current_text
         )
         bot.send_message(
             chat_id=chat_id,
-            parse_mode=ParseMode.MARKDOWN,
+            parse_mode=ParseMode.HTML,
             text=text,
             reply_markup=keyboard
         )
@@ -87,13 +87,13 @@ def query_handler(call):
         bot.edit_message_caption(
             chat_id=chat_id,
             message_id=call.message.message_id,
-            parse_mode=ParseMode.MARKDOWN,
+            parse_mode=ParseMode.HTML,
             caption=current_caption
         )
         bot.send_photo(
             chat_id=chat_id,
             photo=photo,
-            parse_mode=ParseMode.MARKDOWN,
+            parse_mode=ParseMode.HTML,
             caption=caption,
             reply_markup=keyboard
         )
@@ -117,7 +117,7 @@ def query_handler(call):
                 bot.edit_message_text(
                     chat_id=chat_id,
                     message_id=call.message.message_id,
-                    parse_mode=ParseMode.MARKDOWN,
+                    parse_mode=ParseMode.HTML,
                     text=current_text,
                     reply_markup=get_inline_keyboard_regulations(CALLBACK_BUTTON_BACK_TEST)
                 )
@@ -136,7 +136,7 @@ def query_handler(call):
                 bot.edit_message_text(
                     chat_id=chat_id,
                     message_id=call.message.message_id,
-                    parse_mode=ParseMode.MARKDOWN,
+                    parse_mode=ParseMode.HTML,
                     text='Завантаження...'
                 )
                 try:  
@@ -169,7 +169,7 @@ def query_handler(call):
         #         bot.edit_message_text(
         #             chat_id=chat_id,
         #             message_id=call.message.message_id,
-        #             parse_mode=ParseMode.MARKDOWN,
+        #             parse_mode=ParseMode.HTML,
         #             text=text,
         #             reply_markup=get_inline_keyboard_info()
         #         )
@@ -189,7 +189,7 @@ def query_handler(call):
             if text != current_text:
                 bot.send_message(
                     chat_id=chat_id,
-                    parse_mode=ParseMode.MARKDOWN,
+                    parse_mode=ParseMode.HTML,
                     text=text,
                     reply_markup=get_inline_keyboard_regulations(CALLBACK_BUTTON_BACK_INFO)
                 )
@@ -199,7 +199,7 @@ def query_handler(call):
             if text != current_text:
                 bot.send_message(
                     chat_id=chat_id,
-                    parse_mode=ParseMode.MARKDOWN,
+                    parse_mode=ParseMode.HTML,
                     text=text,
                     reply_markup=get_inline_keyboard_regulations(CALLBACK_BUTTON_BACK_INFO)
                 )
@@ -209,7 +209,7 @@ def query_handler(call):
             if text != current_text:
                 bot.send_message(
                     chat_id=chat_id,
-                    parse_mode=ParseMode.MARKDOWN,
+                    parse_mode=ParseMode.HTML,
                     text=text,
                     reply_markup=get_inline_keyboard_regulations(CALLBACK_BUTTON_BACK_INFO)
                 )
@@ -221,13 +221,13 @@ def query_handler(call):
             bot.edit_message_text(
                 chat_id=chat_id,
                 message_id=call.message.message_id,
-                parse_mode=ParseMode.MARKDOWN,
+                parse_mode=ParseMode.HTML,
                 text=current_text
             )
             bot.send_photo(
                 chat_id=chat_id,
                 photo=photo,
-                parse_mode=ParseMode.MARKDOWN,
+                parse_mode=ParseMode.HTML,
                 caption=text,
                 reply_markup=get_inline_keyboard_test(0)
             )
@@ -247,7 +247,7 @@ def query_handler(call):
             current_msg = ''
             text_answer = '"{0}"'.format(current_content_test['buttons'][answer])
             if callback == answer:
-                current_msg = '*Молодець!* Так тримати, твоя відповідь {0} правильна'.format(text_answer) 
+                current_msg = '<b>Молодець!</b> Так тримати, твоя відповідь {0} правильна'.format(text_answer) 
                 update_count_by_user_id(user_id, 'true')
             else:
                 current_msg = 'Нажаль ти помилився. Правильна відповідь: {0}'.format(text_answer)
@@ -255,7 +255,7 @@ def query_handler(call):
             if next_quesion_number >= 5:
                 number, win, lose = get_count_by_user_id(user_id)
                 photo = open('finish.jpg'.format(str(next_quesion_number)), 'rb')
-                finish_msg = 'Вітаю, ти закінчив випробування.\nОсь твої результати:\nПравильних відповідей: *{0}*\nНеправильних відповідей: *{1}*'.format(win, lose)
+                finish_msg = 'Вітаю, ти закінчив випробування.\nОсь твої результати:\nПравильних відповідей: <b>{0}</b>\nНеправильних відповідей: <b>{1}</b>'.format(win, lose)
                 send_photo(current_caption=current_msg, caption=finish_msg, photo=photo, keyboard=get_inline_keyboard_test_finish())
             else:
                 next_content_test = test[next_quesion_number]
