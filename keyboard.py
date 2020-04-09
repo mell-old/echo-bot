@@ -46,9 +46,9 @@ CALLBACK_BUTTON_BACK_TEST = 'callback_button_back_test'
 # titles for inline button
 
 TITLES = {
-    CALLBACK_BUTTON_INFO: 'Що таке RedBull Flugtag?',
+    CALLBACK_BUTTON_INFO: 'Що таке Red Bull Flugtag?',
     CALLBACK_BUTTON_VIDEO: 'Як це було в 2013?',
-    CALLBACK_BUTTON_SEND: 'Хочу прийняти участь',
+    CALLBACK_BUTTON_SEND: 'Хочу взяти участь',
     CALLBACK_BUTTON_VIEWER: 'Хочу бути глядачем!',
     CALLBACK_BUTTON_ONE: '#некласичнийкостюм',
     CALLBACK_BUTTON_TWO: '#самсобідавінчі',

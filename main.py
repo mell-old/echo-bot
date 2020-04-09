@@ -13,7 +13,7 @@ from logger import new_logger
 
 log = new_logger('bot')
 
-init_db()
+init_db(True)
 
 bot = telebot.TeleBot(content['token'])
 
