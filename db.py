@@ -29,6 +29,7 @@ def init_db(force: bool = False):
             id          INTEGER PRIMARY KEY,
             user_id     TEXT NOT NULL,
             username    TEXT,
+            name        TEXT,
             callback    TEXT NOT NULL
         )
     ''')
@@ -38,6 +39,7 @@ def init_db(force: bool = False):
             id          INTEGER PRIMARY KEY,
             user_id     TEXT NOT NULL,
             username    TEXT,
+            name        TEXT,
             count       integer DEFAULT 0,
             true        integer DEFAULT 0,
             false       integer DEFAULT 0
@@ -46,13 +48,13 @@ def init_db(force: bool = False):
 
     conn.commit()
 
-def add_callback(user_id: str, username: str, callback: str):
+def add_callback(user_id: str, username: str, name: str, callback: str):
     conn = get_connection()
     c = conn.cursor()
     user = username
     if user == None:
         user = 'anonymous'
-    c.execute('INSERT INTO users (user_id, username, callback) VALUES (?,?,?)', (user_id, user, callback))
+    c.execute('INSERT INTO users (user_id, username, name, callback) VALUES (?,?,?,?)', (user_id, user, name, callback))
     
     c.execute('SELECT * FROM users')
 
@@ -64,7 +66,7 @@ def get_users_by_callback(callback: str):
     c = conn.cursor()
 
     c.execute('''
-        SELECT DISTINCT username FROM users
+        SELECT DISTINCT username, name FROM users
         WHERE callback = ?
     ''', (callback, ))
     
@@ -117,18 +119,37 @@ def update_count_by_user_id(user_id:str, answer: str):
     log.info('Success update to test table')
     conn.commit()
 
-def add_user_to_test(user_id: str, username: str):
+def add_user_to_test(user_id: str, username: str, name: str):
     conn = get_connection()
     c = conn.cursor()
-    c.execute('INSERT INTO test (user_id, username) VALUES (?,?)', (user_id, username))
+    c.execute('INSERT INTO test (user_id, username, name) VALUES (?,?,?)', (user_id, username, name))
 
     log.info('Success insert to test table')
     conn.commit()
+
+ADMIN_CALLBACK = [
+    'callback_button1_info',
+    'callback_button1_video',
+    'callback_button_one',
+    'callback_button_two',
+    'callback_button_security',
+    'callback_button_build',
+    'callback_button_teams',
+    'callback_button_test',
+    'callback_info',
+    'callback_challenge',
+    'callback_test'
+]
  
 if __name__ == '__main__':
-    init_db(True)
-    username = 'testuser'
-    add_user_to_test('123124324', username)
-    update_count_by_user_id('123124324', 'true')
-    update_count_by_user_id('123124324', 'false')
-    get_count_by_user_id('123124324')
+    init_db()
+    n = 0
+    username = [ 'olehmell', 'romanenkooleg', 'anonymous', 'sipliy0y', 'kryzhanovskyi13', 'Interscur', 'Ich0ke', 'Poplavavskyy' ]
+    name = [ 'Oleh Mell', 'Oleg', 'Evgen', 'Павел', 'Володимир', 'Sasha', 'Den', 'Sergiy Poplavskyi' ]
+    while n != 8:
+        for x in ADMIN_CALLBACK:
+            add_user_to_test('11111', username[n], name[n])
+            add_callback('11111', username[n], name[n], x)
+        n = n + 1
+    
+    print('Finish')

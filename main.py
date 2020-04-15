@@ -13,7 +13,7 @@ from logger import new_logger
 
 log = new_logger('bot')
 
-init_db(True)
+init_db()
 
 bot = telebot.TeleBot(content['token'])
 
@@ -50,17 +50,21 @@ def send_anytext(message):
     chat_id = message.chat.id
     username = message.from_user.username
     user_id = message.from_user.id
+    name = message.from_user.first_name
+    last_name = message.from_user.last_name
+    if last_name is not None:
+        name = ' ' + last_name
     if message.text == BUTTON_INFO:
         text = content['msg']['fgt']
-        add_callback(user_id, username, 'callback_info')
+        add_callback(user_id, username, name, 'callback_info')
         bot.send_message(chat_id, text, reply_markup=get_inline_keyboard_info())
     elif message.text == BUTTON_CHALLENGE:
         text = content['msg']['challenge']
-        add_callback(user_id, username, 'callback_challenge')
+        add_callback(user_id, username, name, 'callback_challenge')
         bot.send_message(chat_id, text, parse_mode=ParseMode.HTML, reply_markup=get_inline_keyboard_challenge())
     elif message.text == 'Перевір себе':
         text = content['test']
-        add_callback(user_id, username, 'callback_test')
+        add_callback(user_id, username, name, 'callback_test')
         bot.send_message(chat_id, text, parse_mode=ParseMode.HTML, reply_markup=get_inline_keyboard_test_start())
     else:
         bot.send_message(chat_id, text='Немає відповіді на ваш текст, використовуй кнопки, щоб швидко знайти потрібну інформацію', reply_markup=get_base_reply_keyboard())
@@ -102,7 +106,7 @@ def query_handler(call):
         (count, users) = get_users_by_callback(new_callback)
         btn_name = TITLES[new_callback]
         cout_text = ('Усього натисків на кнопку: {0}').format(count)
-        users_text = ''.join('@{}\n'.format(str(x[0])) for x in users)
+        users_text = ''.join('@{0} - {1}\n'.format(str(x[0]), str(x[1])) for x in users)
         text='Користувачі які написнули на кнопку "{0}":\n{1}{2}'.format(btn_name, users_text, cout_text)
         print(text)
         if text != current_text:
@@ -111,7 +115,11 @@ def query_handler(call):
         log.debug('Add new callback: {0}'.format(callback))
         username = call.from_user.username
         user_id = call.from_user.id
-        add_callback(user_id, username, callback)
+        name = call.from_user.first_name
+        last_name = call.from_user.last_name
+        if last_name is not None:
+            name = ' ' + last_name 
+        add_callback(user_id, username, name, callback)
         print(callback)    
         if callback == CALLBACK_BUTTON_REGULATIONS:
                 bot.edit_message_text(
@@ -216,7 +224,7 @@ def query_handler(call):
 
         if callback == CALLBACK_BUTTON_TEST:
             text = test[0]['quesion']
-            add_user_to_test(user_id, username)
+            add_user_to_test(user_id, username, name)
             photo = open('vic0.jpg', 'rb')
             bot.edit_message_text(
                 chat_id=chat_id,
@@ -254,7 +262,7 @@ def query_handler(call):
                 update_count_by_user_id(user_id, 'false')
             if next_quesion_number >= 5:
                 number, win, lose = get_count_by_user_id(user_id)
-                photo = open('finish.jpg'.format(str(next_quesion_number)), 'rb')
+                photo = open('finish.jpg', 'rb')
                 finish_msg = 'Вітаю, ти закінчив випробування.\nОсь твої результати:\nПравильних відповідей: <b>{0}</b>\nНеправильних відповідей: <b>{1}</b>'.format(win, lose)
                 send_photo(current_caption=current_msg, caption=finish_msg, photo=photo, keyboard=get_inline_keyboard_test_finish())
             else:
